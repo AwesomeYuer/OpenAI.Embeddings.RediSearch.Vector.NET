@@ -1,0 +1,82 @@
+﻿using OpenAI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
+
+namespace OpenAI.Embeddings
+{
+    public sealed class EmbeddingsRequest
+    {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="input">
+        /// Input text to get embeddings for, encoded as a string or array of tokens.
+        /// To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays.
+        /// Each input must not exceed 8192 tokens in length.
+        /// </param>
+        /// <param name="model">
+        /// The <see cref="OpenAI.Models.Model"/> to use.
+        /// Defaults to: text-embedding-ada-002
+        /// </param>
+        /// <param name="user">
+        /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+        /// </param>
+        /// <exception cref="ArgumentNullException">A valid <see cref="input"/> string is a Required parameter.</exception>
+        public EmbeddingsRequest(string input, Model model = null!, string user = null!)
+            : this(new List<string> { input }, model, user)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="input">
+        /// Input text to get embeddings for, encoded as a string or array of tokens.
+        /// To get embeddings for multiple inputs in a single request, pass an array of strings or array of token arrays.
+        /// Each input must not exceed 8192 tokens in length.
+        /// </param>
+        /// <param name="model">
+        /// The <see cref="OpenAI.Models.Model"/> to use.
+        /// Defaults to: text-embedding-ada-002
+        /// </param>
+        /// <param name="user">
+        /// A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.
+        /// </param>
+        /// <exception cref="ArgumentNullException">A valid <see cref="input"/> string is a Required parameter.</exception>
+        public EmbeddingsRequest(IEnumerable<string> input, Model model = null!, string user = null!)
+        {
+            Input = input?.ToList()!;
+
+            if (Input?.Count == 0)
+            {
+                throw new ArgumentNullException(nameof(input), $"Missing required {nameof(input)} parameter");
+            }
+
+            Model = model ?? Models.Model.Embedding_Ada_002;
+
+            if (!Model.Contains("embedding") &&
+                !Model.Contains("search") &&
+                !Model.Contains("similarity"))
+            {
+                throw new ArgumentException($"{Model} is not supported", nameof(model));
+            }
+
+            User = user;
+        }
+
+        [JsonPropertyName("input")]
+        public IReadOnlyList<string>? Input { get; }
+
+        [JsonPropertyName("model")]
+        public string? Model { get; }
+
+        [JsonPropertyName("user")]
+        public string? User { get; }
+    }
+}
