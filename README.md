@@ -1,0 +1,1 @@
+# OpenAI.Embeddings.RediSearch.Vector.NET
