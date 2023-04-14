@@ -8,11 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OpenAI-DotNet" Version="6.7.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenAI-DotNet\OpenAI-DotNet.csproj" />
+    <None Update=".openai">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   
