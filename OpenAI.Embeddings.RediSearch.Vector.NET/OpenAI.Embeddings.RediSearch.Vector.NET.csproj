@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <!--<PackageReference Include="NRediSearch" Version="2.2.79" />-->
+    <PackageReference Include="NRedisStack" Version="0.6.0" />
     <PackageReference Include="OpenAI-DotNet" Version="6.7.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
   </ItemGroup>
