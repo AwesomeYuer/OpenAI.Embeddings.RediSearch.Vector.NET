@@ -24,7 +24,7 @@ var vector = result
         )
     .ToArray();
 
-var redis = ConnectionMultiplexer.Connect("dev-001.eastasia.cloudapp.azure.com,password=p@$$w0rdw!th0ut");
+var redis = ConnectionMultiplexer.Connect("xxxxxxx.eastasia.cloudapp.azure.com,password=Password01!");
 var db = redis.GetDatabase();
 
 // Call the SearchRedis method
